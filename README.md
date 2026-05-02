@@ -1,13 +1,16 @@
 # LLM Dev Workspace
 
-Local-first desktop developer workspace for chatting with local LLMs.
+Local-first desktop IDE workspace for coding with local LLM chat.
 
 ## MVP Scope
 
 - Electron desktop shell
 - React and TypeScript renderer
-- Left sidebar for workspaces and chats
-- Main chat panel with model selection
+- Local project folder picker
+- Left sidebar for file explorer, workspaces, and chats
+- Monaco Editor center panel for viewing and editing files
+- Right AI chat panel with model selection
+- Scoped Electron IPC bridge for listing, reading, and saving project files
 - Ollama provider placeholder
 - SQLite placeholders for workspaces, conversations, messages, and providers
 
