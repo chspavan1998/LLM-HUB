@@ -1,0 +1,19 @@
+{
+  "name": "llm-dev-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first desktop developer workspace for LLM chat.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @llm-dev-workspace/desktop",
+    "build": "npm run build -w @llm-dev-workspace/core && npm run build -w @llm-dev-workspace/desktop",
+    "typecheck": "npm run typecheck -w @llm-dev-workspace/core && npm run typecheck -w @llm-dev-workspace/desktop"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+
