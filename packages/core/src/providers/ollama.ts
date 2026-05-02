@@ -1,4 +1,5 @@
 import type { LlmModel } from "../types/model.js";
+import type { ProviderMetadata } from "../types/provider.js";
 import type {
   ChatCompletionChunk,
   ChatCompletionRequest,
@@ -27,6 +28,16 @@ export class OllamaProvider implements LlmProvider {
     this.baseUrl = new URL(options.baseUrl ?? "http://127.0.0.1:11434");
   }
 
+  getMetadata(): ProviderMetadata {
+    return {
+      id: this.id,
+      name: this.name,
+      type: "local",
+      baseUrl: this.baseUrl.toString(),
+      enabled: true
+    };
+  }
+
   async listModels(): Promise<LlmModel[]> {
     try {
       const response = await fetch(new URL("/api/tags", this.baseUrl));
@@ -43,7 +54,10 @@ export class OllamaProvider implements LlmProvider {
           id: model.name as string,
           name: model.name as string,
           providerId: this.id,
-          isLocal: true
+          isLocal: true,
+          metadata: {
+            providerType: "local"
+          }
         }));
     } catch (error) {
       throw new ProviderError("Unable to read Ollama models.", this.id, error);
@@ -59,4 +73,3 @@ export class OllamaProvider implements LlmProvider {
     );
   }
 }
-

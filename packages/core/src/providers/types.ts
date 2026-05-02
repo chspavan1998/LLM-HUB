@@ -1,5 +1,6 @@
 import type { ChatMessage } from "../types/chat.js";
 import type { LlmModel } from "../types/model.js";
+import type { ProviderMetadata } from "../types/provider.js";
 
 export interface ChatCompletionRequest {
   modelId: string;
@@ -15,6 +16,7 @@ export interface ChatCompletionChunk {
 export interface LlmProvider {
   readonly id: string;
   readonly name: string;
+  getMetadata(): ProviderMetadata;
   listModels(): Promise<LlmModel[]>;
   streamChat(request: ChatCompletionRequest): AsyncIterable<ChatCompletionChunk>;
 }
@@ -29,4 +31,3 @@ export class ProviderError extends Error {
     this.name = "ProviderError";
   }
 }
-

@@ -9,9 +9,9 @@ Local-first desktop developer workspace for chatting with local LLMs.
 - Left sidebar for workspaces and chats
 - Main chat panel with model selection
 - Ollama provider placeholder
-- SQLite chat history placeholder
+- SQLite placeholders for workspaces, conversations, messages, and providers
 
-The MVP intentionally does not include OpenAI, Claude, Gemini, authentication, cloud sync, or a CLI bridge.
+The MVP intentionally does not include OpenAI, Claude, Gemini, authentication, cloud sync, full repo indexing, or a CLI bridge.
 
 ## Setup
 
@@ -24,6 +24,8 @@ npm install
 ```bash
 npm run dev
 ```
+
+This command starts the Vite renderer and launches the Electron desktop shell.
 
 ## Build
 
