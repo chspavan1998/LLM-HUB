@@ -2,41 +2,50 @@
 
 ## Project
 
-We are building `llm-dev-workspace`, a local-first desktop developer app.
+We are building `llm-dev-workspace`, now branded in-product as `DevFlow AI`.
 
-The app should be a lightweight Cursor-style IDE where developers can open a local project folder, view and edit files, and chat with selected LLMs beside the code.
+The project is a VS Code extension that adds a Cursor-like LLM chat view inside VS Code. VS Code already provides the IDE, editor, explorer, terminal, Git, and project context, so this extension should focus only on the LLM chat experience.
 
 ## Tech Direction
 
 Use:
 
-- Electron
-- React
+- VS Code Extension API
 - TypeScript
-- Node.js
-- SQLite
-- Monaco Editor
+- VS Code Webview View
 - Ollama integration first
+- VS Code SecretStorage for secrets
+- VS Code configuration, globalState, or workspaceState for non-secret data
 
-Avoid adding OpenAI, Claude, Gemini, authentication, teams, cloud sync, billing, full repo indexing, or a CLI bridge in the first MVP.
+Avoid:
+
+- Electron
+- Custom IDE shells
+- Monaco Editor in this repo
+- OpenAI, Claude, Gemini implementations in the MVP
+- Authentication
+- Cloud sync
+- Repo indexing
+- File editing, code apply, or diff application
+- CLI bridge
 
 ## Coding Guidelines
 
 - Keep architecture modular.
 - Use TypeScript everywhere possible.
-- Keep provider logic separated from UI.
-- Do not put API keys in frontend code.
-- Do not expose raw Node APIs directly to renderer code.
-- Keep file access scoped to the selected local project folder.
+- Keep provider logic separated from webview/UI logic.
+- Do not put API keys in webview code.
+- Do not expose raw Node APIs to the webview.
+- Use VS Code APIs for editor context, secrets, configuration, and state.
 - Prefer simple readable code over over-engineering.
 - Add comments only where useful.
-- Keep the app local-first.
+- Keep the first version focused on chat plus active file/selection context.
 
-## Initial Folder Direction
-
-Target structure:
+## Target Structure
 
 ```text
-apps/desktop
-packages/core
+src
+media
 docs
+```
+

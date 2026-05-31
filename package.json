@@ -1,21 +1,106 @@
 {
   "name": "llm-dev-workspace",
+  "displayName": "DevFlow AI",
+  "description": "Cursor-like LLM chat inside VS Code with Ollama and active editor context.",
   "version": "0.1.0",
+  "publisher": "devflow-ai",
   "private": true,
-  "description": "Local-first desktop IDE workspace for coding with local LLM chat.",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
   ],
-  "overrides": {
-    "monaco-editor": "0.53.0"
+  "activationEvents": [
+    "onView:devflowAI.chatView",
+    "onCommand:devflowAI.openChat",
+    "onCommand:devflowAI.newTask",
+    "onCommand:devflowAI.setOllamaUrl",
+    "onCommand:devflowAI.setApiKeyPlaceholder",
+    "onCommand:devflowAI.clearChat"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "DevFlow AI",
+      "properties": {
+        "devflowAI.provider": {
+          "type": "string",
+          "enum": [
+            "ollama",
+            "cloud-placeholder"
+          ],
+          "default": "ollama",
+          "description": "Default LLM provider for DevFlow AI chat."
+        },
+        "devflowAI.ollama.baseUrl": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Base URL for the local Ollama server."
+        },
+        "devflowAI.ollama.model": {
+          "type": "string",
+          "default": "llama3.2",
+          "description": "Default Ollama model name used for chat requests."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "devflowAI.openChat",
+        "title": "DevFlow AI: Open Chat",
+        "category": "DevFlow AI"
+      },
+      {
+        "command": "devflowAI.newTask",
+        "title": "DevFlow AI: New Task",
+        "category": "DevFlow AI"
+      },
+      {
+        "command": "devflowAI.setOllamaUrl",
+        "title": "DevFlow AI: Set Ollama URL",
+        "category": "DevFlow AI"
+      },
+      {
+        "command": "devflowAI.setApiKeyPlaceholder",
+        "title": "DevFlow AI: Set API Key Placeholder",
+        "category": "DevFlow AI"
+      },
+      {
+        "command": "devflowAI.clearChat",
+        "title": "DevFlow AI: Clear Chat",
+        "category": "DevFlow AI"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "devflowAI",
+          "title": "DevFlow AI",
+          "icon": "media/devflow.svg"
+        }
+      ]
+    },
+    "views": {
+      "devflowAI": [
+        {
+          "id": "devflowAI.chatView",
+          "name": "Tasks",
+          "type": "webview"
+        }
+      ]
+    }
   },
   "scripts": {
-    "dev": "npm run dev -w @llm-dev-workspace/desktop",
-    "build": "npm run build -w @llm-dev-workspace/core && npm run build -w @llm-dev-workspace/desktop",
-    "typecheck": "npm run typecheck -w @llm-dev-workspace/core && npm run typecheck -w @llm-dev-workspace/desktop"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "typecheck": "tsc -p ./ --noEmit"
   },
-  "engines": {
-    "node": ">=20"
+  "devDependencies": {
+    "@types/node": "^20.19.22",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.9.3"
   }
 }

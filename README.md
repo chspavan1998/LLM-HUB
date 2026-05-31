@@ -1,51 +1,94 @@
-# LLM Dev Workspace
+# DevFlow AI
 
-Local-first desktop IDE workspace for coding with local LLM chat.
+VS Code extension that adds a Cursor-style LLM task workflow inside VS Code.
 
-## MVP Scope
+The current UI uses a lightweight sidebar launcher plus dedicated editor-tab task chats. It uses Ollama first for local offline models.
 
-- Electron desktop shell
-- React and TypeScript renderer
-- Local project folder picker
-- Left sidebar for file explorer, workspaces, and chats
-- Monaco Editor center panel for viewing and editing files
-- Right AI chat panel with model selection
-- Scoped Electron IPC bridge for listing, reading, and saving project files
-- Ollama provider placeholder
-- SQLite placeholders for workspaces, conversations, messages, and providers
+## Features
 
-The MVP intentionally does not include OpenAI, Claude, Gemini, authentication, cloud sync, full repo indexing, or a CLI bridge.
+- Activity Bar launcher named DevFlow AI
+- New Task command that opens chat in an editor tab
+- Streaming chat responses with stop/cancel
+- Provider selector
+- Model selector
+- Paste selected code from the editor to create a context chip
+- Attach active file explicitly from the composer
+- Ollama chat provider
+- Cloud provider placeholder only
+- SecretStorage command for future API keys
+- In-memory task tabs only for now
 
-## Setup
+## Run In Extension Development Host
+
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-## Run The Desktop App
+2. Compile:
 
 ```bash
-npm run dev
+npm run compile
 ```
 
-This command starts the Vite renderer and launches the Electron desktop shell.
+3. Open this repo in VS Code and press `F5`.
 
-## Build
+This starts an Extension Development Host window. Open the DevFlow AI Activity Bar view to launch tasks, or run `DevFlow AI: New Task`.
 
-```bash
-npm run build
-```
-
-## Type Check
+## Development Commands
 
 ```bash
+npm run compile
+npm run watch
 npm run typecheck
 ```
 
-## Project Structure
+## Use Ollama Locally
 
-```text
-apps/desktop        Electron and React desktop app
-packages/core       Shared providers, database placeholders, and domain types
-docs                Product planning docs
+1. Install Ollama from `https://ollama.com`.
+2. Start Ollama.
+3. Pull a model, for example:
+
+```bash
+ollama pull llama3.2
 ```
+
+4. In VS Code settings, set:
+
+```json
+{
+  "devflowAI.provider": "ollama",
+  "devflowAI.ollama.baseUrl": "http://localhost:11434",
+  "devflowAI.ollama.model": "llama3.2"
+}
+```
+
+You can also run `DevFlow AI: Set Ollama URL` from the Command Palette.
+
+## Commands
+
+- `DevFlow AI: Open Chat`
+- `DevFlow AI: New Task`
+- `DevFlow AI: Set Ollama URL`
+- `DevFlow AI: Set API Key Placeholder`
+- `DevFlow AI: Clear Chat`
+
+## Context
+
+The chat can include:
+
+- The active editor file, attached explicitly from the composer
+- The current editor selection, attached when you paste selected code into the chat window
+
+The extension does not index the repository in this MVP.
+
+## Future Plan
+
+- OpenAI provider
+- Claude provider
+- Gemini provider
+- Saved chat history
+- Code apply and diff workflows
+
+OpenAI, Claude, and Gemini are not implemented yet.
